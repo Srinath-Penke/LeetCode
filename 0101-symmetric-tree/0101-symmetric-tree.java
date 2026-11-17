@@ -14,48 +14,32 @@
  * }
  */
 class Solution {
-    TreeNode nullCase = new TreeNode(-101);
-
     public boolean isSymmetric(TreeNode root) {
-        Deque<TreeNode> q = new ArrayDeque<>();
-        q.offer(root);
+        if (root == null) return true;
 
-        while(!q.isEmpty()) {
-            int size = q.size();
+        Deque<TreeNode> q = new LinkedList<>();
 
-            Deque<TreeNode> nodes = new ArrayDeque<>();
-            while (size-- > 0) {
-                TreeNode node = q.poll();
-                TreeNode left = node.left;
-                TreeNode right = node.right;
+        q.offer(root.left);
+        q.offer(root.right);
 
-                if (left == null) {
-                   nodes.offer(nullCase);
-                } else {
-                    nodes.offer(left);
-                    q.offer(left);
-                }
-                if (right == null) {
-                   nodes.offer(nullCase);
-                } else {
-                    nodes.offer(right);
-                    q.offer(right);
-                }
-            }
+        while (!q.isEmpty()) {
+            TreeNode left = q.poll();
+            TreeNode right = q.poll();
 
-            if (nodes.size() % 2 != 0) return false;
-            while (!nodes.isEmpty()) {            
-                TreeNode first = nodes.removeFirst();
-                TreeNode last = nodes.removeLast();
+            if (left == null && right == null) continue;
 
-                if (first == nullCase || last == nullCase) {
-                    if (first != last) return false;
-                } else {
-                    if (first.val != last.val) return false;
-                } 
-            }
+            if (left == null || right == null) return false;
+
+            if (left.val != right.val) return false;
+
+            // Add mirrored pairs
+            q.offer(left.left);
+            q.offer(right.right);
+
+            q.offer(left.right);
+            q.offer(right.left);
         }
-        
+
         return true;
     }
 }
