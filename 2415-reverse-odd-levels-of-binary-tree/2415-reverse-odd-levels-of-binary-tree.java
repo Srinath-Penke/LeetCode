@@ -15,41 +15,21 @@
  */
 
 class Solution {
-    public TreeNode reverseOddLevels(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<>();
-        q.offer(root);
 
-        int level = 0;
-        while (!q.isEmpty()) {
+    public void dfs(TreeNode left, TreeNode right, int level) {
+        if (left == null || right == null) return;
 
-            int size = q.size();
-            List<TreeNode> nodes = new ArrayList<>();
-
-            while (size-- > 0) {
-                TreeNode node = q.poll();
-                nodes.add(node);
-
-                if (node.left != null) q.offer(node.left);
-                if (node.right != null) q.offer(node.right);
-            }
-
-            // Reverse values at odd levels
-            if (level % 2 == 1) {
-                int left = 0;
-                int right = nodes.size() - 1;
-
-                while (left < right) {
-                    int temp = nodes.get(left).val;
-                    nodes.get(left).val = nodes.get(right).val;
-                    nodes.get(right).val = temp;
-
-                    left++; right--;
-                }
-            }
-
-            level++;
+        if (level % 2 == 1) {
+            int t = left.val;
+            left.val = right.val;
+            right.val = t;
         }
-
+        dfs(left.left, right.right, level + 1);
+        dfs(left.right, right.left, level + 1);
+    }
+    
+    public TreeNode reverseOddLevels(TreeNode root) {
+        dfs(root.left, root.right, 1);
         return root;
     }
 }
