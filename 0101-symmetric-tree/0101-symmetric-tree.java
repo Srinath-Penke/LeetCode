@@ -19,10 +19,10 @@ class Solution {
             return true;
         }
 
-        return isMirror(root.left, root.right);
+        return isSameTree(root.left, root.right);
     }
 
-    public boolean isMirror(TreeNode left, TreeNode right) {
+    public boolean isSameTree(TreeNode left, TreeNode right) {
 
         if (left == null && right == null) {
             return true;
@@ -36,7 +36,7 @@ class Solution {
             return false;
         }
 
-        return isMirror(left.left, right.right) &&
-               isMirror(left.right, right.left);
+        return isSameTree(left.left, right.right) &&
+               isSameTree(left.right, right.left);
     }
 }
