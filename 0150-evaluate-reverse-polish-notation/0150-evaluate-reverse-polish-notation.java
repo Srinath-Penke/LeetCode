@@ -5,17 +5,15 @@ class Solution {
 
         for (String item: tokens) {
            if (operators.contains(item)) {
-                int result = 0;
                 int b = stack.pop();
                 int a = stack.pop();
                 switch (item) {
-                    case "+": result = a + b; break;
-                    case "-": result = a - b; break;
-                    case "*": result = a * b; break;
-                    case "/": result = a / b; break;
+                    case "+": stack.push(a + b); break;
+                    case "-": stack.push(a - b); break;
+                    case "*": stack.push(a * b); break;
+                    case "/": stack.push(a / b); break;
                     default: break;
                 }
-                stack.push(result);
             } else {
                 stack.push(Integer.parseInt(item));
             }
