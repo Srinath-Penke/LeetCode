@@ -1,10 +1,10 @@
 class Solution {
     public int evalRPN(String[] tokens) {
         Deque<Integer> stack = new ArrayDeque<>();
+        String operators = "+-*/";
 
         for (String item: tokens) {
-           if (item.equals("+") || item.equals("-") 
-            || item.equals("*") || item.equals("/")) {
+           if (operators.contains(item)) {
                 int result = 0;
                 int b = stack.pop();
                 int a = stack.pop();
