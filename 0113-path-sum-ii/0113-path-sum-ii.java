@@ -20,15 +20,13 @@ class Solution {
 
         path.add(root.val);
         remaining -= root.val;
-        if (root.left == null && root.right == null) {
-            if (remaining == 0) {
-                result.add(new ArrayList<>(path));
-            }
-        } else {
-            dfs(root.left, remaining, path, result);
-            dfs(root.right, remaining, path, result);
+        
+        if (root.left == null && root.right == null && remaining == 0)
+            result.add(new ArrayList<>(path));
+        
+        dfs(root.left, remaining, path, result);
+        dfs(root.right, remaining, path, result);
 
-        }
         path.remove(path.size() - 1);
     }
 
