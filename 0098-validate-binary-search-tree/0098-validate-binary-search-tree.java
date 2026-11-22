@@ -16,8 +16,8 @@
 class Solution {
     public boolean dfs(TreeNode root, long min, long max) {
         if (root == null) return true;
-        
-        long val = root.val;
+
+        int val = root.val;
         if (val <= min || val >= max) return false;
 
         return dfs(root.left, min, val) && dfs(root.right, val, max);
