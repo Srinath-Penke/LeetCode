@@ -26,8 +26,8 @@ class Solution {
 
             current = stack.pop();
             
-            k--;
-            if (k == 0) return current.val;
+            if (--k == 0) return current.val;
+            
             current = current.right;
         }
         
