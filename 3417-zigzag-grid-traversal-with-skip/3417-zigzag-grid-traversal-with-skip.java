@@ -6,16 +6,20 @@ class Solution {
         int n = grid[0].length;
 
         int skip = 0;
-
         for (int i = 0; i < m; i++) {
-            int start = (i % 2 == 0) ? 0 : n - 1;
-            int step = (i % 2 == 0) ? 1 : -1;
 
-            for (int j = start; j >= 0 && j < n; j += step) {
-                if (skip % 2 == 0) {
-                    result.add(grid[i][j]);
+            if (i % 2 == 0) {
+                for (int j = 0; j < n; j++) {
+                    if (skip++ % 2 == 0) {
+                        result.add(grid[i][j]);
+                    }
                 }
-                skip++;
+            } else {
+                for (int j = n - 1; j >= 0; j--) {
+                    if (skip++ % 2 == 0) {
+                        result.add(grid[i][j]);
+                    }
+                }
             }
         }
 
