@@ -11,34 +11,40 @@ public class Codec {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        List<String> tree = new ArrayList<>();
-        write(root, tree);
-        return String.join(",", tree);
+        StringBuilder sb = new StringBuilder();
+        write(root, sb);
+        return sb.toString();
     }
 
-    public void write(TreeNode root, List<String> tree) {
+    private void write(TreeNode root, StringBuilder sb) {
+        if (sb.length() > 0) sb.append(',');
+
         if (root == null) {
-            tree.add("#");
+            sb.append('#');
             return;
         }
-        tree.add(String.valueOf(root.val));
-        write(root.left, tree);
-        write(root.right, tree);
+
+        sb.append(root.val);
+        write(root.left, sb);
+        write(root.right, sb);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        Deque<String> tree = new ArrayDeque<>(Arrays.asList(data.split(",")));
-        return read(tree);
+        return read(data, new int[]{0});
     }
 
-    public TreeNode read(Deque<String> tree) {
-        String val = tree.poll();
+    private TreeNode read(String data, int[] index) {
+        int start = index[0];
+        while (index[0] < data.length() && data.charAt(index[0]) != ',')
+            index[0]++;
+
+        String val = data.substring(start, index[0]++);
         if (val.equals("#")) return null;
-        
+
         TreeNode root = new TreeNode(Integer.parseInt(val));
-        root.left = read(tree);
-        root.right = read(tree);
+        root.left = read(data, index);
+        root.right = read(data, index);
 
         return root;
     }
